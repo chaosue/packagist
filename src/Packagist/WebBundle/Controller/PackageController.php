@@ -23,7 +23,7 @@ class PackageController extends Controller
      * @Route(
      *     "/packages/{name}/edit",
      *     name="edit_package",
-     *     requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
+     *     requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+?"}
      * )
      */
     public function editAction(Request $req, $name)

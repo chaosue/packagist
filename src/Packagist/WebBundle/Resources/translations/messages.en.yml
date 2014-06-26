@@ -6,6 +6,7 @@ menu:
     profile: Profile
     logout: Logout
     login: Login
+    new_account: Create a new account
     register: Register
     browse_packages: Browse Packages
     twitter: Follow @packagist
@@ -19,3 +20,20 @@ link_type:
     conflict: Conflicts
     replace: Replaces
     provide: Provides
+
+page:
+   submit_package: Submit Package
+   search_pagckage_placeholder: Search Packages..
+   add_maintainer: add maintainer
+   add_maintainer:  Remove maintainer
+   maintainer: maintainer
+   code_canonical: Canonical
+   force_update_package: Force Update
+   edit: Edit
+   package_require: require
+   package_require_capital: require
+   author_capital: Author
+   unknown_license: Unknown License
+
+login:
+   forgot_password: Forgot password

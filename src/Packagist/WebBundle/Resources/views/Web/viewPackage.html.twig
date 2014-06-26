@@ -17,14 +17,14 @@
         <div class="package"{% if app.user and package.crawledAt is null and (is_granted('ROLE_EDIT_PACKAGES') or package.maintainers.contains(app.user)) %} data-force-crawl="true"{% endif %}>
             {% if is_granted('ROLE_EDIT_PACKAGES') or package.maintainers.contains(app.user) %}
                 <form class="action" action="{{ path("edit_package", {name: package.name}) }}">
-                    <input type="submit" value="Edit" />
+                    <input type="submit" value="{{ 'page.edit'|trans }}" />
                 </form>
             {% endif %}
             {% if is_granted('ROLE_UPDATE_PACKAGES') or package.maintainers.contains(app.user) %}
                 <form class="force-update action" action="{{ path('update_package', {name: package.name}) }}" method="POST">
                     <input type="hidden" name="_method" value="PUT" />
                     <input type="hidden" name="update" value="1" />
-                    <input type="submit" value="Force Update" />
+                    <input type="submit" value="{{ 'page.force_update_package'|trans }}" />
                 </form>
             {% endif %}
             {% if deleteForm is defined %}
@@ -38,7 +38,7 @@
                 {% if is_favorite is defined %}
                     <i class="mark-favorite icon-star{% if not is_favorite %}-empty{% endif %}" data-remove-url="{{ path('user_remove_fav', {name: app.user.username, package: package.name}) }}" data-add-url="{{ path('user_add_fav', {name: app.user.username}) }}" data-package="{{ package.name }}"></i>
                 {% endif %}
-                <a href="{{ path("view_vendor", {"vendor": package.vendor}) }}">{{ package.vendor }}/</a>{{ package.packageName }}
+                {%  if package.vendor %}<a href="{{ path("view_vendor", {"vendor": package.vendor}) }}">{{ package.vendor }}/</a>{% endif %}{{ package.packageName }}
                 <a id="copy" data-clipboard-text="{{ package.name }}" title="Copy to clipboard"><i class="icon-copy"></i></a>
             </h1>
             {% if version and version.tags|length %}
@@ -70,17 +70,17 @@
 
             <p class="description">{{ package.description }}</p>
             <p class="details">
-                <span>Maintainer{{ package.maintainers|length > 1 ? 's' : '' }}:</span>
+                <span>{{ 'page.maintainer'|trans }}{{ package.maintainers|length > 1 ? 's' : '' }}:</span>
                 {% for maintainer in package.maintainers %}
                     <a href="{{ path('user_profile', {'name': maintainer.username}) }}">{{ maintainer.username }}</a>{{ loop.last ? '' : ', ' }}
                 {% endfor %}
-                {% if addMaintainerForm is defined or removeMaintainerForm is defined %}({% if addMaintainerForm is defined %}<a id="add-maintainer" href="{{ path('add_maintainer', {'name': package.name}) }}">add maintainer</a>{% endif %}{% if addMaintainerForm is defined and removeMaintainerForm is defined %} / {% endif %}{% if removeMaintainerForm is defined %}<a id="remove-maintainer" href="{{ path('remove_maintainer', {'name': package.name}) }}">remove maintainer</a>{% endif %}){% endif %}
+                {% if addMaintainerForm is defined or removeMaintainerForm is defined %}({% if addMaintainerForm is defined %}<a id="add-maintainer" href="{{ path('add_maintainer', {'name': package.name}) }}">{{ 'page.add_maintainer'|trans }}</a>{% endif %}{% if addMaintainerForm is defined and removeMaintainerForm is defined %} / {% endif %}{% if removeMaintainerForm is defined %}<a id="remove-maintainer" href="{{ path('remove_maintainer', {'name': package.name}) }}">remove maintainer</a>{% endif %}){% endif %}
                 <br />
                 {% if version and version.homepage %}
                     <span>Homepage:</span> <a href="{{ version.homepage }}">{{ version.homepage|replace({'http://': ''}) }}</a><br />
                 {% endif %}
                 {% set repoUrl = package.repository|replace({'git://github.com/': 'https://github.com/', 'git@github.com:': 'https://github.com/'}) %}
-                <span>Canonical:</span> <a href="{{ repoUrl }}">{{ repoUrl }}</a><br />
+                <span>{{ 'page.code_canonical'|trans }}:</span> <a href="{{ repoUrl }}">{{ repoUrl }}</a><br />
                 {% if version.support.source is defined %}
                     <span>Source:</span> <a href="{{ version.support.source }}">{{ version.support.source }}</a><br />
                 {% endif %}
@@ -103,7 +103,7 @@
                     {% if addMaintainerForm is defined %}
                         <form id="add-maintainer-form" class="{{ show_add_maintainer_form|default(false) ? '': 'hidden' }}" action="{{ path('add_maintainer', {'name': package.name}) }}" method="POST" {{ form_enctype(addMaintainerForm) }}>
                             <div>
-                                <h2>Add Maintainer</h2>
+                                <h2>{{ 'page.add_maintainer'|trans }}</h2>
                                 <p>
                                     {{ form_label(addMaintainerForm.user, "Username") }}
                                     {{ form_errors(addMaintainerForm.user) }}
@@ -118,7 +118,7 @@
                     {% if removeMaintainerForm is defined %}
                         <form id="remove-maintainer-form" class="{{ show_remove_maintainer_form|default(false) ? '': 'hidden' }}" action="{{ path('remove_maintainer', {'name': package.name}) }}" method="POST" {{ form_enctype(removeMaintainerForm) }}>
                             <div>
-                                <h2>Remove Maintainer</h2>
+                                <h2>{{ 'page.remove_maintainer'|trans }}</h2>
                                 <p>
                                     {{ form_label(removeMaintainerForm.user, "Username") }}
                                     {{ form_errors(removeMaintainerForm.user) }}
@@ -157,7 +157,7 @@
                                     {% endif %}
 
                                     <span class="release-date">{{ version.releasedAt|date("Y-m-d H:i") }} UTC</span>
-                                    <span class="license{% if not version.license %} unknown{% endif %}">{{ version.license ? version.license|join(', ') : 'Unknown License' }}</span>
+                                    <span class="license{% if not version.license %} unknown{% endif %}">{{ version.license ? version.license|join(', ') : 'page.unknown_license'|trans }}</span>
                                 </h1>
 
                                 <div class="details{% if loop.index0 == 0 %} open{% endif %}">

@@ -375,8 +375,18 @@ class WebController extends Controller
         if ('POST' === $req->getMethod()) {
             $form->bind($req);
             if ($form->isValid()) {
-                list($vendor, $name) = explode('/', $package->getName(), 2);
-
+//                list($vendor, $name) = explode('/', $package->getName(), 2);
+                $namePortions = explode('/', $package->getName(), 2);
+                if(isset($namePortions[1]))
+                {
+                   $vendor = $namePortions[0];
+                   $name = $namePortions[1];
+                }
+                else
+                {
+                    $vendor = 'JM';
+                    $name = $namePortions[0];
+                }
                 $existingPackages = $this->getDoctrine()
                     ->getRepository('PackagistWebBundle:Package')
                     ->createQueryBuilder('p')
@@ -418,7 +428,7 @@ class WebController extends Controller
 
     /**
      * @Template()
-     * @Route("/packages/{vendor}/", name="view_vendor", requirements={"vendor"="[A-Za-z0-9_.-]+"})
+     * @Route("/packages/{vendor}/", name="view_vendor", requirements={"vendor"="([A-Za-z0-9_.-]+)?"})
      */
     public function viewVendorAction($vendor)
     {
@@ -447,28 +457,28 @@ class WebController extends Controller
      * @Route(
      *     "/p/{name}.{_format}",
      *     name="view_package_alias",
-     *     requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?", "_format"="(json)"},
+     *     requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+?", "_format"="(json)"},
      *     defaults={"_format"="html"}
      * )
      * @Route(
      *     "/packages/{name}",
      *     name="view_package_alias2",
-     *     requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?/", "_format"="(json)"},
+     *     requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+?/", "_format"="(json)"},
      *     defaults={"_format"="html"}
      * )
      * @Method({"GET"})
      */
     public function viewPackageAliasAction(Request $req, $name)
-    {
+    {die;
         return $this->redirect($this->generateUrl('view_package', array('name' => trim($name, '/'), '_format' => $req->getRequestFormat())));
     }
 
     /**
      * @Template()
      * @Route(
-     *     "/packages/{name}.{_format}",
+     *     "/packages/view/{name}.{_format}",
      *     name="view_package",
-     *     requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?", "_format"="(json)"},
+     *     requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+?", "_format"="(json)"},
      *     defaults={"_format"="html"}
      * )
      * @Method({"GET"})
@@ -542,7 +552,6 @@ class WebController extends Controller
         )) {
             $data['deleteVersionCsrfToken'] = $this->get('form.csrf_provider')->generateCsrfToken('delete_version');
         }
-
         return $data;
     }
 
@@ -551,7 +560,7 @@ class WebController extends Controller
      * @Route(
      *     "/versions/{versionId}.{_format}",
      *     name="view_version",
-     *     requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?", "versionId"="[0-9]+", "_format"="(json)"}
+     *     requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+?", "versionId"="[0-9]+", "_format"="(json)"}
      * )
      * @Method({"GET"})
      */
@@ -573,7 +582,7 @@ class WebController extends Controller
      * @Route(
      *     "/versions/{versionId}/delete",
      *     name="delete_version",
-     *     requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?", "versionId"="[0-9]+"}
+     *     requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+?", "versionId"="[0-9]+"}
      * )
      * @Method({"DELETE"})
      */
@@ -603,7 +612,7 @@ class WebController extends Controller
 
     /**
      * @Template()
-     * @Route("/packages/{name}", name="update_package", requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"}, defaults={"_format" = "json"})
+     * @Route("/packages/refresh/{name}", name="update_package", requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+"}, defaults={"_format" = "json"})
      * @Method({"PUT"})
      */
     public function updatePackageAction($name)
@@ -675,7 +684,7 @@ class WebController extends Controller
 
     /**
      * @Template()
-     * @Route("/packages/{name}", name="delete_package", requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"})
+     * @Route("/packages/{name}", name="delete_package", requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+"})
      * @Method({"DELETE"})
      */
     public function deletePackageAction(Request $req, $name)
@@ -724,7 +733,7 @@ class WebController extends Controller
 
     /**
      * @Template("PackagistWebBundle:Web:viewPackage.html.twig")
-     * @Route("/packages/{name}/maintainers/", name="add_maintainer", requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"})
+     * @Route("/packages/{name}/maintainers/", name="add_maintainer", requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+"})
      */
     public function createMaintainerAction(Request $req, $name)
     {
@@ -781,7 +790,7 @@ class WebController extends Controller
 
     /**
      * @Template("PackagistWebBundle:Web:viewPackage.html.twig")
-     * @Route("/packages/{name}/maintainers/delete", name="remove_maintainer", requirements={"name"="[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"})
+     * @Route("/packages/{name}/maintainers/delete", name="remove_maintainer", requirements={"name"="([A-Za-z0-9_.-]+/)?[A-Za-z0-9_.-]+"})
      */
     public function removeMaintainerAction(Request $req, $name)
     {

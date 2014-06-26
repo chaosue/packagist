@@ -32,10 +32,11 @@
             </form>
 
             <p>
-                <a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a>
-                {% for owner in hwi_oauth_resource_owners() %}
+                <a href="{{ path('fos_user_resetting_request') }}">{{'login.forgot_password'|trans}}?</a>
+             <!--   {% for owner in hwi_oauth_resource_owners() %}
                     <a class="login-{{ owner }}" href="{{ hwi_oauth_login_url(owner) }}">Login with {{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
                 {% endfor %}
+                -->
             </p>
         </div>
     {% else %}

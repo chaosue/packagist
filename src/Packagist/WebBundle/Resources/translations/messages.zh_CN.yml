@@ -1,0 +1,39 @@
+menu:
+    about_packagist: 关于 Packagist
+    rss_feeds: Atom/RSS 订阅
+    about_composer: 关于 Composer
+    home: 首页 
+    profile: 资料 
+    logout: 注销 
+    login: 登录
+    new_account: 创建新账号
+    register: Register
+    browse_packages: Package浏览
+    follow: 关注
+    contact: 联系我们
+    stats: 数据统计
+    register: 注册
+
+link_type:
+    require: 依赖
+    devRequire: 依赖 (Dev)
+    suggest: 建议
+    conflict: 冲突
+    replace: 代替
+    provide: Provides
+
+
+page:
+   submit_package: 提交Package
+   search_pagckage_placeholder: 查找Package...
+   add_maintainer: 添加维护者
+   add_maintainer: 移除维护者
+   maintainer: 维护者
+   code_canonical: 代码源
+   force_update_package: 从源更新
+   edit: 编辑
+   package_require: 依赖
+   author_capital: 作者
+   unknown_license: 未知许可证
+login:
+   forgot_password:  忘记密码
