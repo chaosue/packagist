@@ -31,7 +31,7 @@
                 <form class="delete action" action="{{ path('delete_package', {name: package.name}) }}" method="POST">
                     <input type="hidden" name="_method" value="DELETE" />
                     {{ form_widget(deleteForm._token) }}
-                    <input type="submit" value="Delete" />
+                    <input type="submit" value="{{ 'page.delete_package'|trans }}" />
                 </form>
             {% endif %}
             <h1>
@@ -63,9 +63,9 @@
             {% endif %}
 
             <p class="downloads">
-                <span>Overall:</span> {% if downloads.total is defined %}{{ downloads.total|number_format(0, '.', ' ') }} install{{ downloads.total == 1 ? '' : 's' }}{% else %}N/A{% endif %}<br />
-                <span>This month:</span> {% if downloads.monthly is defined %}{{ downloads.monthly|number_format(0, '.', ' ') }} install{{ downloads.monthly == 1 ? '' : 's' }}{% else %}N/A{% endif %}<br />
-                <span>Today:</span> {% if downloads.daily is defined %}{{ downloads.daily|number_format(0, '.', ' ') }} install{{ downloads.daily == 1 ? '' : 's' }}{% else %}N/A{% endif %}<br />
+                <span>{{ 'page.over_all_install'|trans }}:</span> {% if downloads.total is defined %}{{ downloads.total|number_format(0, '.', ' ') }} install{{ downloads.total == 1 ? '' : 's' }}{% else %}N/A{% endif %}<br />
+                <span>{{ 'page.this_month_install'|trans }}:</span> {% if downloads.monthly is defined %}{{ downloads.monthly|number_format(0, '.', ' ') }} install{{ downloads.monthly == 1 ? '' : 's' }}{% else %}N/A{% endif %}<br />
+                <span>{{ 'page.today_install'|trans }}:</span> {% if downloads.daily is defined %}{{ downloads.daily|number_format(0, '.', ' ') }} install{{ downloads.daily == 1 ? '' : 's' }}{% else %}N/A{% endif %}<br />
             </p>
 
             <p class="description">{{ package.description }}</p>
@@ -152,7 +152,7 @@
                                     <form class="action delete-version" action="{{ path("delete_version", {"versionId": version.id}) }}" method="post">
                                         <input type="hidden" name="_method" value="DELETE" />
                                         <input type="hidden" name="_token" value="{{ deleteVersionCsrfToken }}" />
-                                        <input type="submit" value="Delete">
+                                        <input type="submit" value="{{ 'page.delete_package'|trans }}">
                                     </form>
                                     {% endif %}
 

@@ -37,7 +37,7 @@
         "jms/security-extra-bundle": "1.5.*",
         "jms/di-extra-bundle": "1.4.*",
 
-        "composer/composer": "1.0.x-dev",
+        "composer/composer": "chaos-dev",
         "friendsofsymfony/user-bundle": "1.*",
         "hwi/oauth-bundle": "dev-master",
         "nelmio/solarium-bundle": "1.*",
@@ -74,5 +74,10 @@
             "type": "composer",
             "url": "http://packages.zendframework.com/"
         }
+	,
+	{
+	    "type": "git",
+	    "url": "https://github.com/sonever/composer.git"
+	}
     ]
 }

@@ -469,7 +469,7 @@ class WebController extends Controller
      * @Method({"GET"})
      */
     public function viewPackageAliasAction(Request $req, $name)
-    {die;
+    {
         return $this->redirect($this->generateUrl('view_package', array('name' => trim($name, '/'), '_format' => $req->getRequestFormat())));
     }
 

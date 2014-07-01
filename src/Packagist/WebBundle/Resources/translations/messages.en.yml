@@ -30,10 +30,14 @@ page:
    code_canonical: Canonical
    force_update_package: Force Update
    edit: Edit
+   delete_package: Delete
    package_require: require
    package_require_capital: require
-   author_capital: Author
+   author_capital: Authors
    unknown_license: Unknown License
+   over_all_install: Overall
+   this_month_install: This month
+   today_install: Today
 
 login:
    forgot_password: Forgot password

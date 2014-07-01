@@ -32,8 +32,12 @@ page:
    code_canonical: 代码源
    force_update_package: 从源更新
    edit: 编辑
+   delete_package: 删除
    package_require: 依赖
    author_capital: 作者
    unknown_license: 未知许可证
+   over_all_install: 总安装数
+   this_month_install: 本月
+   today_install: 今天
 login:
    forgot_password:  忘记密码
